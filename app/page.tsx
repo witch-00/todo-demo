@@ -67,10 +67,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-blue-50 flex items-center justify-center p-6">
-      <div className="w-full max-w-xl bg-white rounded-2xl shadow-md p-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
+      <div className="w-full max-w-[600px] bg-white rounded-2xl shadow-md p-6">
         <header className="mb-4">
-          <h1 className="text-2xl font-semibold text-blue-700">我的待办清单</h1>
+          <h1 className="text-2xl font-semibold text-slate-900">我的待办清单</h1>
         </header>
 
         <form className="flex gap-2" onSubmit={addTask}>
@@ -78,14 +78,14 @@ export default function Home() {
             ref={inputRef}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="flex-1 rounded-md border border-blue-200 px-3 py-2 text-sm placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+            className="flex-1 rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
             placeholder="输入新的任务..."
             aria-label="任务内容"
           />
           <button
             type="submit"
             onClick={(e) => addTask(e)}
-            className="ml-1 rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="ml-1 rounded-md bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 transition-colors duration-200 px-4 py-2 text-sm font-medium text-white shadow-sm hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-300"
           >
             添加
           </button>
@@ -97,18 +97,18 @@ export default function Home() {
           ) : tasks.length === 0 ? (
             <p className="text-center text-sm text-blue-600/70">暂无任务，添加一个开始吧。</p>
           ) : (
-            <ul className="divide-y divide-blue-100 rounded-md overflow-hidden border border-blue-50">
+            <ul className="space-y-3">
               {tasks.map((task) => (
-                <li key={task.id} className="flex items-center justify-between px-4 py-3">
+                <li key={task.id} className="bg-white rounded-xl shadow-sm p-4 flex items-center justify-between hover:shadow-md transition-shadow">
                   <div className="flex items-center">
                     <input
                       id={`chk-${task.id}`}
                       type="checkbox"
                       checked={task.completed}
                       onChange={() => toggleCompleted(task.id, !task.completed)}
-                      className="h-5 w-5 text-blue-600 rounded focus:ring-blue-400"
+                      className="h-5 w-5 text-blue-600 rounded focus:ring-blue-300"
                     />
-                    <label htmlFor={`chk-${task.id}`} className={`ml-3 text-sm ${task.completed ? "line-through text-blue-300" : "text-blue-900"}`}>
+                    <label htmlFor={`chk-${task.id}`} className={`ml-3 text-sm ${task.completed ? "line-through text-slate-400" : "text-slate-900"}`}>
                       {task.text}
                     </label>
                   </div>
