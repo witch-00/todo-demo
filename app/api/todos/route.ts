@@ -56,3 +56,28 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: String(err) }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const id = Number(body?.id);
+
+    if (!Number.isFinite(id) || id <= 0) {
+      return NextResponse.json({ error: "Invalid id" }, { status: 400 });
+    }
+
+    const deleted = await sql`
+      DELETE FROM todos
+      WHERE id = ${id}
+      RETURNING id, content, completed, created_at
+    `;
+
+    if (!deleted || deleted.length === 0) {
+      return NextResponse.json({ error: "Not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(deleted[0]);
+  } catch (err) {
+    return NextResponse.json({ error: String(err) }, { status: 500 });
+  }
+}

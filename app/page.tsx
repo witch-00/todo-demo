@@ -66,6 +66,20 @@ export default function Home() {
     }
   };
 
+  const deleteTask = async (id: number) => {
+    try {
+      const res = await fetch("/api/todos", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id }),
+      });
+      if (!res.ok) throw new Error("Delete failed");
+      await fetchTodos();
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-6">
       <div className="w-full max-w-[600px] bg-white rounded-2xl shadow-md p-6">
@@ -112,6 +126,14 @@ export default function Home() {
                       {task.text}
                     </label>
                   </div>
+                  <button
+                    type="button"
+                    onClick={() => deleteTask(task.id)}
+                    aria-label="删除任务"
+                    className="ml-4 text-red-500 hover:text-red-600 p-1 rounded"
+                  >
+                    ×
+                  </button>
                 </li>
               ))}
             </ul>
